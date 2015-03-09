@@ -31,9 +31,9 @@ for repo in "${repos[@]}"; do
 		cd ..
 		for fullVersion in "${fullVersions[@]}"; do
 
-			commit="$(git log -1 --format='format:%H' -- "$repo/$version/$fullVersion")"
+			commit="$(git log -1 --format='format:%H' -- "$version/$fullVersion")"
 			#fullVersion="$(grep -m1 'ENV NODE_VERSION ' "$repo/$version/Dockerfile" | cut -d' ' -f3)"
-			versionAliases=( $fullVersion $version ${aliases[$fullVersion]} )
+			versionAliases=( $fullVersion ${aliases[$fullVersion]} )
 
 			echo
 			for va in "${versionAliases[@]}"; do
@@ -41,7 +41,7 @@ for repo in "${repos[@]}"; do
 			done
 		
 			for variant in onbuild slim wheezy; do
-				commit="$(git log -1 --format='format:%H' -- "$repo/$version/$fullVersion/$variant")"
+				commit="$(git log -1 --format='format:%H' -- "$version/$fullVersion/$variant")"
 				echo
 				for va in "${versionAliases[@]}"; do
 					if [ "$va" = 'latest' ]; then
@@ -56,7 +56,7 @@ for repo in "${repos[@]}"; do
 			# Only for armv7hf
 			if [ $repo == 'armv7hf' ]; then
 				variant='sid'
-				commit="$(git log -1 --format='format:%H' -- "$repo/$version/$fullVersion/$variant")"
+				commit="$(git log -1 --format='format:%H' -- "$version/$fullVersion/$variant")"
 				echo
 				for va in "${versionAliases[@]}"; do
 					if [ "$va" = 'latest' ]; then
