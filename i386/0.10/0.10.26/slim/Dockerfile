@@ -2,7 +2,7 @@
 FROM resin/i386-debian:jessie
 
 ENV NODE_VERSION 0.10.26
-ENV NPM_VERSION 2.7.3
+ENV NPM_VERSION 2.10.1
 
 RUN buildDeps='curl' \
 	&& set -x \
@@ -13,6 +13,7 @@ RUN buildDeps='curl' \
 	&& rm "node-v$NODE_VERSION-linux-x86.tar.gz" \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& npm install -g npm@"$NPM_VERSION" --unsafe-perm \
-	&& npm cache clear
+	&& npm cache clear \
+	&& rm -rf /tmp/*
 
 CMD [ "node" ]
